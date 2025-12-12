@@ -1,0 +1,16 @@
+{
+    "name": "spenpo-freelance/astra-homelabweekly",
+    "description": "Astra Homelab Weekly Newsletter Theme",
+    "type": "wordpress-theme",
+    "license": "MIT",
+    "version": "dev-main",
+    "authors": [
+        {
+            "name": "Spenpo",
+            "email": "spenpo@spenpo.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.3"
+    }
+}
