@@ -1,0 +1,28 @@
+name: Deploy Homelab Weekly Core plugin
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/wp-content/plugins/homelabweekly-core/**"
+      - ".github/workflows/deploy.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy via Rsync
+        uses: burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avzr --delete
+          path: src/wp-content/plugins/homelabweekly-core/
+          remote_path: ${{ secrets.HOMELABWEEKLY_PATH }}/wp-content/plugins/homelabweekly-core/
+          remote_host: ${{ secrets.HOSTINGER_HOST }}
+          remote_user: ${{ secrets.HOSTINGER_USERNAME }}
+          remote_key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          remote_port: ${{ secrets.HOSTINGER_PORT }}

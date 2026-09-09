@@ -1,33 +1,33 @@
-# Homelab Weelky Newsletter
+# Homelab Weekly
 
-Built with [wp-build](https://github.com/spenpo/wp-build)
+Shipping repo for Homelab Weekly (newsletter/blog). Product code lives in the `homelabweekly-core` WordPress plugin, analogous to Zoomies Core.
 
-**Note:** The `hooks/` directory contains git hooks that should be committed to the repository. After cloning, always run `./install-hooks.sh` to install them to `.git/hooks/`.
+## Layout
 
-### Disabling Hooks (Temporary)
-
-If you need to bypass a hook temporarily, you can use git's `--no-verify` flag:
-
-```bash
-# Skip pre-commit hook
-git commit --no-verify -m "your message"
-
-# Skip pre-push hook
-git push --no-verify
+```
+src/wp-content/plugins/homelabweekly-core/
+  homelabweekly-core.php
+  includes/
+  assets/
+.github/workflows/deploy.yml
 ```
 
-**Note:** Use this sparingly. The hooks are in place to maintain code quality and ensure proper workflow.
+WordPress core, themes, and Hostinger site files are not built or deployed from this repository.
 
+## Deploy
 
-## 🤝 Contributing
+Push to `main`. GitHub Actions rsyncs `homelabweekly-core` into `wp-content/plugins/homelabweekly-core/` on Hostinger.
 
-1. Fork the repository
-2. Clone your fork and run `./install-hooks.sh` to install git hooks
-3. Create a feature branch
-4. Add your custom code to `src/`
-5. Test with `./build.sh`
-6. Submit a pull request
+Secrets (already used by the previous Hostinger deploy):
 
-## 📄 License
+- `HOSTINGER_HOST`
+- `HOSTINGER_USERNAME`
+- `HOSTINGER_PRIVATE_KEY`
+- `HOSTINGER_PORT`
+- `HOMELABWEEKLY_PATH` (WordPress root on the server)
 
-MIT License - see LICENSE file for details. 
+Do not install this plugin from WordPress.org. After rsync, activate it in wp-admin.
+
+## Changelog
+
+Releases are tracked with [Changie](https://github.com/miniscruff/changie). See `CHANGELOG.md`.
