@@ -16,7 +16,7 @@ WordPress core, themes, and Hostinger site files are not built or deployed from 
 
 ## Deploy
 
-Push to `staging` or `main`. GitHub Actions rsyncs `homelabweekly-core` into `wp-content/plugins/homelabweekly-core/` on Hostinger.
+Push to `main`. GitHub Actions rsyncs `homelabweekly-core` into `wp-content/plugins/homelabweekly-core/` on Hostinger.
 
 Secrets (already used by the previous Hostinger deploy):
 
