@@ -1,0 +1,19 @@
+{
+  "name": "Homelab Weekly WordPress Playground",
+  "user": "ubuntu",
+  "install": "bash scripts/cloud-agent-setup.sh",
+  "start": "true",
+  "terminals": [
+    {
+      "name": "wordpress",
+      "command": "bash scripts/cloud-agent-start.sh",
+      "description": "WordPress Playground on http://127.0.0.1:8080 (admin / admin). Live-mounts src/wp-content/plugins/homelabweekly-core so repo edits show up without a rebuild."
+    }
+  ],
+  "ports": [
+    {
+      "name": "WordPress Playground",
+      "port": 8080
+    }
+  ]
+}

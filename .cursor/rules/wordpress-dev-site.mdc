@@ -1,0 +1,50 @@
+---
+description: Local WordPress Playground site for verifying homelabweekly-core front-end work
+alwaysApply: true
+---
+
+# Local WordPress (Playground)
+
+This repo boots a real WordPress site for Cloud Agents. Use it instead of stand-in HTML pages when verifying front-end, shortcode, theme, or PHP changes.
+
+`wp-now` is deprecated. The environment uses `@wp-playground/cli` (PHP.wasm + SQLite, no Docker, no MariaDB).
+
+## URL and login
+
+- Site: `http://127.0.0.1:8080`
+- Admin: `http://127.0.0.1:8080/wp-admin` — `admin` / `admin`
+- Port `8080` is exposed from `.cursor/environment.json`.
+
+The Cloud Agent `install` step runs `scripts/cloud-agent-setup.sh`. The `wordpress` terminal runs `scripts/cloud-agent-start.sh` on boot. If the site is not up yet, start it:
+
+```bash
+bash scripts/cloud-agent-setup.sh
+bash scripts/cloud-agent-start.sh
+```
+
+Wait until `curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/` returns `200` before screenshotting. The public site starts logged out (visitor view). Log in at `/wp-admin` when you need admin.
+
+## Live plugin mount
+
+`src/wp-content/plugins/homelabweekly-core` is mounted into the Playground site. Edits in the repo show up on reload. Do not copy the plugin into `$HOME/homelabweekly-wp-dev`. Do not bump the plugin version for environment work.
+
+## Verify on this site
+
+Screenshot the local site (homepage plus any inner page you changed) at desktop and mobile widths. That is the source of truth for shortcode HTML, theme wrappers, block markup, and PHP warnings.
+
+Do not build mock HTML pages that only load `homelabweekly-core.css` / `homelabweekly-core.js` as a substitute.
+
+Useful paths: `/`, `/about/`, `/blog/`, `/contact/`.
+
+## Reseed
+
+Content is seeded once (option `homelabweekly_dev_seeded`). To apply seed changes:
+
+- Logged in: visit `http://127.0.0.1:8080/?homelabweekly_reseed=1`
+- Wipe SQLite + WordPress files and boot clean: `bash scripts/cloud-agent-start.sh --reset`
+
+## What this is not
+
+Production (`https://homelabweekly.com`) uses Twenty Twenty-Five with customized templates/parts stored in the database (header, footer, blog home). Those customizations are not in this repo. The local theme is stock Twenty Twenty-Five. Header and footer chrome will differ; `homelabweekly-core` CSS, JS, shortcodes, and PHP are what you are testing. Final layout checks happen on the live site.
+
+Never write to production from this environment. Never commit Playground state, SQLite files, or credentials.

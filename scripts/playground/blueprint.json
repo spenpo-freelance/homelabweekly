@@ -1,0 +1,52 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "twentytwentyfive"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "sureforms"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "activatePlugin",
+      "pluginName": "Homelab Weekly Core",
+      "pluginPath": "homelabweekly-core/homelabweekly-core.php"
+    },
+    {
+      "step": "activatePlugin",
+      "pluginName": "Homelab Weekly Dev Seed",
+      "pluginPath": "homelabweekly-dev-seed/homelabweekly-dev-seed.php"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "Homelab Weekly",
+        "blogdescription": "A weekly newsletter of high-impact homelab projects — infrastructure, Kubernetes, storage, and ops that ships.",
+        "permalink_structure": "/%postname%/"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; $user = get_user_by('login', 'admin'); if ($user) { wp_set_password('admin', $user->ID); } ?>"
+    }
+  ]
+}
