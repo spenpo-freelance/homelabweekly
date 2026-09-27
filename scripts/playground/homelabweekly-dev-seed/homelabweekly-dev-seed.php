@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Homelab Weekly Dev Seed
  * Description: Seeds Home, About, Blog, Contact, sample posts, and the primary nav for the local Playground site. Not shipped to Hostinger.
- * Version: 1
+ * Version: 2
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HOMELABWEEKLY_DEV_SEED_VERSION', '1');
+define('HOMELABWEEKLY_DEV_SEED_VERSION', '2');
 define('HOMELABWEEKLY_DEV_SEED_OPTION', 'homelabweekly_dev_seeded');
 
 add_action('init', 'homelabweekly_dev_seed_maybe_run', 50);
@@ -53,6 +53,12 @@ function homelabweekly_dev_seed_run()
     $user = get_user_by('login', 'admin');
     if ($user) {
         wp_set_password('admin', $user->ID);
+    }
+
+    // SureForms otherwise hijacks the first wp-admin visit with onboarding.
+    update_option('__srfm_do_redirect', false);
+    if (class_exists('\\SRFM\\Inc\\Onboarding')) {
+        \SRFM\Inc\Onboarding::get_instance()->set_onboarding_status('yes');
     }
 
     homelabweekly_dev_seed_delete_defaults();
