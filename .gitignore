@@ -9,3 +9,11 @@
 !.github/**
 !.changes
 !.changes/**
+!scripts/
+!scripts/**
+!.cursor/
+!.cursor/environment.json
+!.cursor/skills/
+!.cursor/skills/**
+!.cursor/rules/
+!.cursor/rules/**
